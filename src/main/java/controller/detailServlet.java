@@ -37,16 +37,18 @@ public class detailServlet extends HttpServlet {
 				rs=pstmt.executeQuery();				//pstmt는 파라미터로 넘겨주지않아!
 				rs.next();
 				
-				
+				/*
 				String title=rs.getString("title");
 				String nickname=rs.getString("nickname");
 				Date writingtime=rs.getDate("writingtime"); 
 				String content =rs.getString("content");		
+				*/
 				
 				request.setAttribute("title",title);
 				request.setAttribute("nickname",nickname);
 				request.setAttribute("writingtime",writingtime);
 				request.setAttribute("content",content);
+				
 					
 				
 		}catch(Exception e){

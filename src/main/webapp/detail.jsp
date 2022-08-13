@@ -40,7 +40,7 @@
                 <h1 class="hidden">헤더</h1>
 
                 <nav id="main-menu">
-                    <h1>메인메뉴 git checkout</h1>
+                    <h1>메인메뉴 branch check</h1>
                     <ul>
                         <li><a href="/guide">학습가이드</a></li>
 

@@ -13,27 +13,16 @@
 		ResultSet rs=null;
 		String DirverName="com.mysql.cj.jdbc.Driver";
 		
+		
 		String url= "jdbc:mysql://localhost:3306/dobong";
 		String db_id="root";
 		String db_pw="iotiot";
 		String sql="select *from notice_tb";
 		
-
-		try {
-			Class.forName(DirverName);
-			conn=DriverManager.getConnection(url, db_id, db_pw);
-			st=conn.createStatement();
-			rs=st.executeQuery(sql);
-		
-			while(rs.next()){
-				int number=Integer.parseInt(rs.getString("number"));
-		//		int number=rs.getString("number");
-				String title=rs.getString("title");
-				String nickname=rs.getString("nickname");
-				Date writingtime=rs.getDate("writingtime"); 
-				String content =rs.getString("content");
-			}	 
-
+		Class.forName(DirverName);
+		conn=DriverManager.getConnection(url, db_id, db_pw);
+		st=conn.createStatement();
+		rs=st.executeQuery(sql);	
 %>
 
 <!DOCTYPE html>
@@ -119,20 +108,17 @@
 				<td>8</td>
 			</tr>
 <!--=======목록 추가을 위한 반복문구간============  -->
-
-<%	
-				
-				while(rs.next()){ %>
-				<tr>
-				<td><%=rs.getInt("number") %></td>
-				<td colspan="2"> <a href="detail.do?number=<%=rs.getInt("number") %>"> ${n.title }</a></td> 
-				<td>${n.nickname}</td>  
-				<td>${n.writingtime}</td> 
+<% 				while(rs.next()){
+			%><tr>
+				<td><%=rs.getInt("number") %> </td>
+				<td colspan="2"> <a href="detail.jsp?number=<%=rs.getInt("number")%>"> <%=rs.getString("title") %></a></td> 
+				<td><%=rs.getString("nickname") %></td>  
+				<td><%=rs.getDate("writingtime") %></td> 
 				<td>44</td>  
 				<td>99</td>
-			</tr>
-			
-			<% } %>
+			</tr><%
+			}%>
+<!--======================================  -->			
 			</tbody>
 			<tfoot>
 				<tr>
@@ -176,11 +162,43 @@
 				
 			</tfoot>
 		</table>
+		
+			<div class="indexer margin-top align-right">
+				<h3 class="hidden">현재 페이지</h3>
+				<div><span class="text-orange text-strong">1</span> / 1 pages</div>
+			</div>
+
+			<div class="margin-top align-center pager">	
+		
+	<div>
+		
+		
+		<span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</span>
+		
+	</div>
+	<ul class="-list- center">
+		<li><a class="-text- orange bold" href="?p=1&t=&q=" >1</a></li>
+				
+	</ul>
+	<div>
+		
+		
+			<span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음</span>
+		
+	</div>
+	
+			</div>
+		</main>
+		
+			
+		</div>
+	</div>
 		<footer style="height:200px;">
 		
 		</footer>
 	</body>
 </html>
+
 <%
 	if(rs!=null)rs.close();
 	if(st!=null)st.close();

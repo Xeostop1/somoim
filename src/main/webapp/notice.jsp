@@ -1,8 +1,41 @@
+<%@page import="java.util.*"%>    
+<%@page import="beans.Notice"%>
+<%@page import="java.sql.*"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*" %>
 
- 
+<%
+		request.setCharacterEncoding("utf-8");
+		Connection conn =null;
+		//PreparedStatement pstmt=null;
+		Statement st=null;
+		ResultSet rs=null;
+		String DirverName="com.mysql.cj.jdbc.Driver";
+		
+		String url= "jdbc:mysql://localhost:3306/dobong";
+		String db_id="root";
+		String db_pw="iotiot";
+		String sql="select *from notice_tb";
+		
+
+		try {
+			Class.forName(DirverName);
+			conn=DriverManager.getConnection(url, db_id, db_pw);
+			st=conn.createStatement();
+			rs=st.executeQuery(sql);
+		
+			while(rs.next()){
+				int number=Integer.parseInt(rs.getString("number"));
+		//		int number=rs.getString("number");
+				String title=rs.getString("title");
+				String nickname=rs.getString("nickname");
+				Date writingtime=rs.getDate("writingtime"); 
+				String content =rs.getString("content");
+			}	 
+
+%>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -39,27 +72,7 @@
 			
 		</style>
 	<body>
-		<%
-		 	request.setCharacterEncoding("utf-8");
-			Connection conn =null;
-			//PreparedStatement pstmt=null;
-			Statement st=null;
-			ResultSet rs=null;
-			String DirverName="com.mysql.cj.jdbc.Driver";
 		
-		
-			String url= "jdbc:mysql://localhost:3306/dobong";
-			String db_id="root";
-			String db_pw="iotiot";
-			String sql="select *from notice_tb";
-			
-			Class.forName(DirverName);
-			conn=DriverManager.getConnection(url, db_id, db_pw);
-			st=conn.createStatement();
-			rs=st.executeQuery(sql);
-			
-		 %>
-
 		<a href="#">새로고침 기능</a>
 		<a href="#">새로고침 기능</a>
 		
@@ -107,18 +120,19 @@
 			</tr>
 <!--=======목록 추가을 위한 반복문구간============  -->
 
-			<% while(rs.next()){
-			%><tr>
-				<td><%=rs.getInt("number") %> </td>
-				<td colspan="2"> <a href="detail.do?number=<%=rs.getInt("number")%>"> <%=rs.getString("title") %></a></td> 
-				<td><%=rs.getString("nickname") %></td>  
-				<td><%=rs.getDate("writingtime") %></td>
-				<!-- <td>rs.getDate("writingtime ")</td> --> 
+<%	
+				
+				while(rs.next()){ %>
+				<tr>
+				<td><%=rs.getInt("number") %></td>
+				<td colspan="2"> <a href="detail.do?number=<%=rs.getInt("number") %>"> ${n.title }</a></td> 
+				<td>${n.nickname}</td>  
+				<td>${n.writingtime}</td> 
 				<td>44</td>  
 				<td>99</td>
-			</tr><%
-			}%>
+			</tr>
 			
+			<% } %>
 			</tbody>
 			<tfoot>
 				<tr>
@@ -167,8 +181,8 @@
 		</footer>
 	</body>
 </html>
-<% 
-rs.close();
-st.close();
-conn.close();
+<%
+	if(rs!=null)rs.close();
+	if(st!=null)st.close();
+	if(conn!=null)conn.close();
 %>

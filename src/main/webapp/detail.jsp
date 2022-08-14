@@ -149,15 +149,15 @@
 							<tbody>
 								<tr>
 									<th>제목</th><!-- 타이틀 DB변경-->
-									<td class="text-align-left text-indent text-strong text-orange" colspan="3"><%=request.getAttribute("title") %></td> 
+									<td class="text-align-left text-indent text-strong text-orange" colspan="3">${notice.title }</td> 
 								</tr>
 								<tr>
 									<th>작성일</th>
-									<td class="text-align-left text-indent" colspan="3"><%=request.getAttribute("writingtime")%></td>
+									<td class="text-align-left text-indent" colspan="3">${notice.writingtime }</td>
 								</tr>
 								<tr>
 									<th>작성자</th>
-									<td><%=request.getAttribute("nickname")%></td>
+									<td>${notice.nickname }</td>
 									<th>조회수</th>
 									<td>148</td>
 								</tr>
@@ -166,7 +166,7 @@
 									<td colspan="3"></td>
 								</tr>
 								<tr class="content">
-									<td colspan="4"><%=request.getAttribute("content") %></td>
+									<td colspan="4">${notice.content }</td>
 								</tr>
 							</tbody>
 						</table>

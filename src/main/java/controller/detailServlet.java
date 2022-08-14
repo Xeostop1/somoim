@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.Notice;
+
 
 @WebServlet("/detail.do")
 public class detailServlet extends HttpServlet {
@@ -37,27 +39,34 @@ public class detailServlet extends HttpServlet {
 				rs=pstmt.executeQuery();				//pstmt는 파라미터로 넘겨주지않아!
 				rs.next();
 				
-				/*
+				
 				String title=rs.getString("title");
 				String nickname=rs.getString("nickname");
 				Date writingtime=rs.getDate("writingtime"); 
 				String content =rs.getString("content");		
-				*/
 				
+				/*
 				request.setAttribute("title",title);
 				request.setAttribute("nickname",nickname);
 				request.setAttribute("writingtime",writingtime);
 				request.setAttribute("content",content);
-				
+				*/
+				Notice notice =new Notice(
+							number,
+							title,
+							nickname, 
+							writingtime,
+							content);
+				request.setAttribute("notice", notice);
 					
 				
 		}catch(Exception e){
 			 System.out.println("sql 접속 오류"+e);
 		}finally {
 			try {
-				rs.close();
-				pstmt.close();                        		
-				conn.close();
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(conn!=null)conn.close();
 				//st.close();
 			} catch (Exception e) {
 				System.out.println("close 오류"+e);
